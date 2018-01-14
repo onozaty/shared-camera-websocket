@@ -53,22 +53,25 @@
         {
           open: function() {
             $status.text('Connected');
-            $connectButton.prop('disabled', true);
-            $disconnectButton.prop('disabled', false);
           },
           close: function(event) {
             console.log(event);
             $status.text('Disconnected');
-            $connectButton.prop('disabled', false);
-            $disconnectButton.prop('disabled', true);
           },
-          message: function(event) {
-            let $img = $cameras.find('img').first();
-            if ($img.length == 0) {
-              $img = $('<img>').appendTo($cameras);
+          message: function(id, data) {
+            let $img = $cameras.find(`img[data-id="${id}"]`).first();
+
+            if (data.size == 0) {
+              // clear
+              $img.remove();
+              return;
             }
 
-            $img.attr('src', URL.createObjectURL(event.data));
+            if ($img.length == 0) {
+              $img = $('<img>').appendTo($cameras).attr('data-id', id);
+            }
+
+            $img.attr('src', URL.createObjectURL(data));
           },
           onerror: function(event) {
             console.log(event);

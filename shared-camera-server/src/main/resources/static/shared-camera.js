@@ -104,8 +104,18 @@ class SharedCamera {
   }
 
   _onMessage(event) {
-    if (this._handlers.message) {
-      this._handlers.message(event);
+    const data = event.data;
+
+    var reader = new FileReader();
+    reader.onload = () => {
+      if (this._handlers.message) {
+        const idLength = new DataView(reader.result, 0, 4).getInt32(0);
+        const id = String.fromCharCode.apply(null, new Uint8Array(reader.result, 4, idLength));
+        const imageData = data.slice(4 + idLength);
+
+        this._handlers.message(id, imageData);
+      }
     }
+    reader.readAsArrayBuffer(data);
   }
 }
