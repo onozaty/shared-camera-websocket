@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Shared Camera (use WebSocket)</title>
+<link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="./shared-camera.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Shared Camera (use WebSocket)</h2>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Status</label>
+        <div class="col-sm-10">
+          <p id="status" class="form-control-static">idle</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">My Camera</label>
+        <div class="col-sm-10">
+          <div class="checkbox">
+            <label>
+              <input id="myCmaeraEnableCheckbox" type="checkbox"> Enable
+            </label>
+          </div>
+          <video id="myCamera"></video>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Cameras</label>
+        <div id="cameras" class="col-sm-10">
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./lib/jquery.min.js"></script>
+  <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./shared-camera.js"></script>
+  <script>
+    $(function() {
+      const URL = window.URL || window.webkitURL;
+      const endpoint = 'ws://' + location.host + '/endpoint?' + window.location.hash;
+
+      const $status = $('#status').text('Idle');
+
+      const $myCmaeraEnableCheckbox = $('#myCmaeraEnableCheckbox');
+      const $myCamera = $('#myCamera');
+      const $cameras = $('#cameras');
+
+      const sharedCamera = new SharedCamera(
+        endpoint,
+        {
+          open: function() {
+            $status.text('Connected');
+            $connectButton.prop('disabled', true);
+            $disconnectButton.prop('disabled', false);
+          },
+          close: function(event) {
+            console.log(event);
+            $status.text('Disconnected');
+            $connectButton.prop('disabled', false);
+            $disconnectButton.prop('disabled', true);
+          },
+          message: function(event) {
+            let $img = $cameras.find('img').first();
+            if ($img.length == 0) {
+              $img = $('<img>').appendTo($cameras);
+            }
+
+            $img.attr('src', URL.createObjectURL(event.data));
+          },
+          onerror: function(event) {
+            console.log(event);
+            $status.text('Failed');
+          }
+        }
+      );
+
+      $myCmaeraEnableCheckbox.on('change', () => {
+        if ($myCmaeraEnableCheckbox.prop('checked')) {
+          sharedCamera.enableCamera($myCamera[0], 100, (error) => {
+            console.log(error);
+            alert('Could not enable camera');
+            $myCmaeraEnableCheckbox.prop('checked', false);
+          });
+        } else {
+          sharedCamera.disableCamera($myCamera[0]);
+        }
+      });
+
+      sharedCamera.connect();
+
+    });
+  </script>
+</body>
+</html>
