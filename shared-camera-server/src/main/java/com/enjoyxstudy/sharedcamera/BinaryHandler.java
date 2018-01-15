@@ -45,7 +45,9 @@ public class BinaryHandler extends BinaryWebSocketHandler {
 
         for (WebSocketSession session : sessions) {
             try {
-                session.sendMessage(toMessage);
+                synchronized (session) {
+                    session.sendMessage(toMessage);
+                }
             } catch (Exception e) {
                 log.warn(String.format("Sending failed. Target session=[%s]", session), e);
             }
