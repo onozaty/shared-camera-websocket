@@ -33,7 +33,7 @@ class SharedCamera {
       .then((stream) => {
         video.srcObject = stream;
         video.autoplay = true;
-        this._startShooting(video, interval); 
+        this._startTransfer(video, interval); 
         this._video = video;
       })
       .catch((error) => {
@@ -56,7 +56,15 @@ class SharedCamera {
     }
   }
 
-  _startShooting(video, interval) {
+  changeTransmissionInterval(interval) {
+    if (!this._video) {
+      return;
+    }
+
+    this._startTransfer(this._video, interval); 
+  }
+
+  _startTransfer(video, interval) {
     if (this._timerId) {
       clearTimeout(this._timerId);
     }

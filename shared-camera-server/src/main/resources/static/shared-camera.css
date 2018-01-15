@@ -1,8 +1,4 @@
-video {
+video, img {
   width: 160px;
-  height: 160px;
-}
-
-img {
-  width: 160px;
+  margin: 5px;
 }

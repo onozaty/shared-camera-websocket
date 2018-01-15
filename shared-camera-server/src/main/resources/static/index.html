@@ -2,13 +2,13 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" />
-<title>Shared Camera (use WebSocket)</title>
+<title>Shared Camera (with WebSocket)</title>
 <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="./shared-camera.css" />
 </head>
 <body>
   <div class="container">
-    <h2>Shared Camera (use WebSocket)</h2>
+    <h2>Shared Camera (with WebSocket)</h2>
     <div class="form-horizontal">
       <div class="form-group">
         <label class="col-sm-2 control-label">Status</label>
@@ -23,6 +23,18 @@
             <label>
               <input id="myCmaeraEnableCheckbox" type="checkbox"> Enable
             </label>
+          </div>
+          <div class="form-inline">
+            Transmission interval(ms)
+            <select id="intervalSelect" class="form-control input-sm">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="500">500</option>
+              <option value="1000">1,000</option>
+              <option value="2000">2,000</option>
+              <option value="5000">5,000</option>
+            </select>
           </div>
           <video id="myCamera"></video>
         </div>
@@ -45,7 +57,9 @@
       const $status = $('#status').text('Idle');
 
       const $myCmaeraEnableCheckbox = $('#myCmaeraEnableCheckbox');
-      const $myCamera = $('#myCamera');
+      const $intervalSelect = $('#intervalSelect');
+      const $myCamera = $('#myCamera').hide();
+      const myCamera = $myCamera.get(0);
       const $cameras = $('#cameras');
 
       const sharedCamera = new SharedCamera(
@@ -82,14 +96,23 @@
 
       $myCmaeraEnableCheckbox.on('change', () => {
         if ($myCmaeraEnableCheckbox.prop('checked')) {
-          sharedCamera.enableCamera($myCamera[0], 100, (error) => {
+          $myCamera.show();
+
+          sharedCamera.enableCamera(myCamera, parseInt($intervalSelect.val()), (error) => {
             console.log(error);
             alert('Could not enable camera');
             $myCmaeraEnableCheckbox.prop('checked', false);
+            $myCamera.hide();
           });
+
         } else {
-          sharedCamera.disableCamera($myCamera[0]);
+          $myCamera.hide();
+          sharedCamera.disableCamera(myCamera);
         }
+      });
+
+      $intervalSelect.on('change', () => {
+        sharedCamera.changeTransmissionInterval(parseInt($intervalSelect.val()));
       });
 
       sharedCamera.connect();
