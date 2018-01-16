@@ -86,7 +86,7 @@ class SharedCamera {
     canvas.setAttribute('height', video.videoHeight);
     context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     canvas.toBlob((blob) => {
-      if (blob && this._webSocket) {
+      if (blob && this._webSocket && this._webSocket.readyState == 1) { // 1: OPEN
         this._webSocket.send(blob);
       }
     }, 'image/jpeg', quality);

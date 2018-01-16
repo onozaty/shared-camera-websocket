@@ -84,7 +84,10 @@
           },
           close: function(event) {
             console.log(event);
-            $status.text('Disconnected');
+            $status.text('Reconnecting...');
+            setTimeout(() => {
+              sharedCamera.connect();
+            }, 5000);
           },
           message: function(id, data) {
             let $img = $cameras.find(`img[data-id="${id}"]`).first();
