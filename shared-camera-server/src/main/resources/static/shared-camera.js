@@ -28,12 +28,12 @@ class SharedCamera {
     this._webSocket.close();
   }
 
-  enableCamera(video, interval, failureCallback) {
+  enableCamera(video, transferSetting, failureCallback) {
     navigator.mediaDevices.getUserMedia({audio: false, video: true})
       .then((stream) => {
         video.srcObject = stream;
         video.autoplay = true;
-        this._startTransfer(video, interval); 
+        this._startTransfer(video, transferSetting); 
         this._video = video;
       })
       .catch((error) => {
@@ -56,25 +56,25 @@ class SharedCamera {
     }
   }
 
-  changeTransmissionInterval(interval) {
+  changeTransferSetting(transferSetting) {
     if (!this._video) {
       return;
     }
 
-    this._startTransfer(this._video, interval); 
+    this._startTransfer(this._video, transferSetting); 
   }
 
-  _startTransfer(video, interval) {
+  _startTransfer(video, transferSetting) {
     if (this._timerId) {
       clearTimeout(this._timerId);
     }
 
     this._timerId = setInterval(() => {
-      this._send(video);
-    }, interval);
+      this._send(video, transferSetting.quality);
+    }, transferSetting.interval);
   }
 
-  _send(video) {
+  _send(video, quality) {
     if (!this._webSocket) {
       return;
     }
@@ -89,7 +89,7 @@ class SharedCamera {
       if (blob && this._webSocket) {
         this._webSocket.send(blob);
       }
-    }, 'image/jpeg', 0.8);
+    }, 'image/jpeg', quality);
   }
 
   _onOpen() {
