@@ -21,7 +21,8 @@ dependencies {
         exclude group: 'com.nativelibs4java', module: 'bridj'
     }
     compile fileTree(dir: 'libs', include: '*.jar')
-
+    compile('com.github.sarxos:webcam-capture-driver-v4l4j:0.3.11')
+ 
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.assertj:assertj-core:3.9.0')

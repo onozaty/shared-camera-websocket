@@ -5,8 +5,13 @@
     "description": "A description for 'websocket.uri'"
   },
   {
-    "name": "capture.interval-millis",
+    "name": "camera.interval-millis",
     "type": "java.lang.String",
-    "description": "A description for 'capture.interva-millis'"
+    "description": "A description for 'camera.interval-millis'"
+  },
+  {
+    "name": "camera.use-v4l4j",
+    "type": "java.lang.String",
+    "description": "A description for 'camera.use-v4l4j'"
   }
 ]}
