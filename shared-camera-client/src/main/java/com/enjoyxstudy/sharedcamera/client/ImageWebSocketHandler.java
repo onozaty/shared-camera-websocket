@@ -33,6 +33,8 @@ public class ImageWebSocketHandler extends BinaryWebSocketHandler {
 
     private void connect() {
 
+        log.info("Connect to: " + webSocketUri);
+
         StandardWebSocketClient client = new StandardWebSocketClient();
         client.doHandshake(this, webSocketUri).addCallback(
                 new ListenableFutureCallback<WebSocketSession>() {
