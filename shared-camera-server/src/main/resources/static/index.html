@@ -28,7 +28,7 @@
             Transmission interval(ms)
             <select id="intervalSelect" class="form-control input-sm">
               <option value="50">50</option>
-              <option value="100">100</option>
+              <option value="100" selected>100</option>
               <option value="200">200</option>
               <option value="500">500</option>
               <option value="1000">1,000</option>
@@ -65,7 +65,7 @@
   <script>
     $(function() {
       const URL = window.URL || window.webkitURL;
-      const endpoint = 'ws://' + location.host + '/endpoint?' + window.location.hash;
+      const endpoint = 'ws://' + location.host + '/endpoint';
 
       const $status = $('#status').text('Idle');
 

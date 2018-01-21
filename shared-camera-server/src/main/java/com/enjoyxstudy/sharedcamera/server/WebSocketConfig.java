@@ -1,4 +1,4 @@
-package com.enjoyxstudy.sharedcamera;
+package com.enjoyxstudy.sharedcamera.server;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -12,10 +12,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    private final BinaryHandler binaryHandler;
+    private final ImageWebSocketHandler imageWebSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(binaryHandler, "/endpoint");
+        registry.addHandler(imageWebSocketHandler, "/endpoint");
     }
 }

@@ -1,4 +1,4 @@
-package com.enjoyxstudy.sharedcamera;
+package com.enjoyxstudy.sharedcamera.server;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class BinaryHandler extends BinaryWebSocketHandler {
+public class ImageWebSocketHandler extends BinaryWebSocketHandler {
 
     private CopyOnWriteArrayList<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 

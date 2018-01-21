@@ -1,4 +1,4 @@
-package com.enjoyxstudy.sharedcamera;
+package com.enjoyxstudy.sharedcamera.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
