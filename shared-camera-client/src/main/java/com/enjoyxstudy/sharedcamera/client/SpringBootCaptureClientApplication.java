@@ -3,6 +3,7 @@ package com.enjoyxstudy.sharedcamera.client;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,8 @@ public class SpringBootCaptureClientApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(SpringBootCaptureClientApplication.class);
         application.setWebEnvironment(false);
-        application.run(args);
+        ConfigurableApplicationContext context = application.run(args);
+        context.close();
     }
 
     @Override

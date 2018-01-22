@@ -42,14 +42,23 @@ public class WebcamCapture {
         while (true) {
 
             if (webSocketHandler.isConnected()) {
-                BufferedImage image = webcam.getImage();
 
-                try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-                    ImageIO.write(image, "jpeg", outputStream);
-                    webSocketHandler.sendMessage(outputStream.toByteArray());
+                BufferedImage image = webcam.getImage();
+                
+                // Occasionally time out when the load is high. At that time it becomes null.
+                if (image != null) {
+
+                    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+                        ImageIO.write(image, "jpeg", outputStream);
+                        webSocketHandler.sendMessage(outputStream.toByteArray());
+                    }
                 }
             }
 
+            if (!webcam.isOpen()) {
+                throw new IOException("Camera closed.");
+            }
+            
             Thread.sleep(intervalMillis);
         }
     }
