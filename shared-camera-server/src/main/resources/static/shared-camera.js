@@ -31,9 +31,9 @@ class SharedCamera {
   enableCamera(video, transferSetting, failureCallback) {
     navigator.mediaDevices.getUserMedia({audio: false, video: true})
       .then((stream) => {
+        video.setAttribute('playsinline', true);
+        video.setAttribute('autoplay', true);
         video.srcObject = stream;
-        video.playsinline = true;
-        video.autoplay = true;
         video.play();
         this._startTransfer(video, transferSetting); 
         this._video = video;
