@@ -34,6 +34,7 @@ class SharedCamera {
         video.srcObject = stream;
         video.playsinline = true;
         video.autoplay = true;
+        video.play();
         this._startTransfer(video, transferSetting); 
         this._video = video;
       })
