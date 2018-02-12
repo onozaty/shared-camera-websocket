@@ -54,6 +54,12 @@ class SharedCamera {
       clearTimeout(this._timerId);
       this._timerId = null;
     }
+
+    setTimeout(() => {
+      if (this._webSocket && this._webSocket.readyState == 1) { // 1: OPEN
+        this._webSocket.send(new Blob());
+      }
+    }, 100);
   }
 
   changeTransferSetting(transferSetting) {

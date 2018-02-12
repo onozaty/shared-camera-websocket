@@ -65,7 +65,8 @@
   <script>
     $(function() {
       const URL = window.URL || window.webkitURL;
-      const endpoint = 'ws://' + location.host + '/endpoint';
+      const protocol = (location.protocol == 'https:') ? 'wss:' : 'ws:';
+      const endpoint = protocol + '//' + location.host + '/endpoint';
 
       const $status = $('#status').text('Idle');
 
@@ -80,10 +81,12 @@
         endpoint,
         {
           open: function() {
+            $cameras.empty();
             $status.text('Connected');
           },
           close: function(event) {
             console.log(event);
+            $cameras.empty();
             $status.text('Reconnecting...');
             setTimeout(() => {
               sharedCamera.connect();
