@@ -1,3 +1,7 @@
 subprojects { version = '0.0.2' }
 
-defaultTasks "clean", "build"
+task clean(dependsOn: [':shared-camera-server:clean', ':shared-camera-client:clean'])
+task build(dependsOn: [':shared-camera-server:build', ':shared-camera-client:build'])
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
