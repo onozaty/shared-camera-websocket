@@ -56,9 +56,7 @@ class SharedCamera {
     }
 
     setTimeout(() => {
-      if (this._webSocket && this._webSocket.readyState == 1) { // 1: OPEN
-        this._webSocket.send(new Blob());
-      }
+      this._send(new Blob());
     }, 100);
   }
 
@@ -76,11 +74,11 @@ class SharedCamera {
     }
 
     this._timerId = setInterval(() => {
-      this._send(video, transferSetting.quality);
+      this._sendImage(video, transferSetting.quality);
     }, transferSetting.interval);
   }
 
-  _send(video, quality) {
+  _sendImage(video, quality) {
     if (!this._webSocket) {
       return;
     }
@@ -92,12 +90,18 @@ class SharedCamera {
     canvas.setAttribute('height', video.videoHeight);
     context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     canvas.toBlob((blob) => {
-      if (blob && this._webSocket && this._webSocket.readyState == 1) { // 1: OPEN
-        this._webSocket.send(blob);
+      if (blob) {
+        this._send(blob);
       }
     }, 'image/jpeg', quality);
   }
 
+  _send(data) {
+    if (this._webSocket && this._webSocket.readyState == 1) { // 1: OPEN
+      this._webSocket.send(data);
+    }
+  }
+  
   _onOpen() {
     if (this._handlers.open) {
       this._handlers.open();
