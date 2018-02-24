@@ -3,8 +3,8 @@ h2 {
 }
 
 video, img {
-  max-width: 160px;
-  max-height: 160px;
+  max-width: 200px;
+  max-height: 200px;
   margin: 5px;
 }
 
@@ -27,10 +27,5 @@ input[type="radio"] {
 @media (max-width: 767px) {
   h2 {
     font-size: 18px;
-  }
-
-  video, img {
-    max-width: 100px;
-    max-height: 100px;
   }
 }
