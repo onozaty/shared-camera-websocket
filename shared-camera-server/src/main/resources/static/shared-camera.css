@@ -2,22 +2,35 @@ h2 {
   margin-bottom: 20px;
 }
 
-@media (max-width: 767px) {
-  h2 {
-    font-size: 20px;
-  }
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
 video, img {
   max-width: 160px;
   max-height: 160px;
   margin: 5px;
 }
 
+.form-group {
+  margin-bottom: 10px;
+}
+
+.camera-enable-radios {
+  margin-bottom: 10px;
+}
+
+input[type="radio"] {
+  vertical-align: top;
+}
+
 #intervalSelect {
   margin-right: 10px;
+}
+
+@media (max-width: 767px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  video, img {
+    max-width: 100px;
+    max-height: 100px;
+  }
 }
