@@ -29,6 +29,8 @@ class SharedCamera {
   }
 
   enableCamera(video, facingMode, transferSetting, failureCallback) {
+    this.disableCamera();
+
     let videoParam;
     if (facingMode) {
       videoParam = {facingMode: facingMode};
@@ -51,6 +53,9 @@ class SharedCamera {
   }
 
   disableCamera() {
+    if (!this._video || !this._video.srcObject) {
+      return;
+    }
   
     this._video.srcObject.getTracks().forEach((track) => {
       track.stop();
