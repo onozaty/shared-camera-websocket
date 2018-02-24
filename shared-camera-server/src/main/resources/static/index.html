@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Shared Camera (with WebSocket)</title>
 <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="./shared-camera.css" />
@@ -23,10 +24,10 @@
             <input id="cameraDisableRadio" type="radio" name="cameraEnable" checked> Disable
           </label>
           <label class="radio-inline">
-            <input id="cameraEnableDefaultRadio" type="radio" name="cameraEnable"> Enable default camera
+            <input id="cameraEnableDefaultRadio" type="radio" name="cameraEnable"> Enable default
           </label>
           <label class="radio-inline">
-            <input id="cameraEnableRearRadio" type="radio" name="cameraEnable"> Enable rear camera
+            <input id="cameraEnableRearRadio" type="radio" name="cameraEnable"> Enable rear
           </label>
           <div class="form-inline">
             Transmission interval(ms)
@@ -38,7 +39,7 @@
               <option value="1000">1,000</option>
               <option value="2000">2,000</option>
               <option value="5000">5,000</option>
-            </select>&nbsp;&nbsp;&nbsp;&nbsp;
+            </select>
             Quality
             <select id="quaritySelect" class="form-control input-sm">
               <option value="1.0">1.0</option>
