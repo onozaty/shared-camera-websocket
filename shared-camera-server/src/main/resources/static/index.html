@@ -19,11 +19,15 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">My Camera</label>
         <div class="col-sm-10">
-          <div class="checkbox">
-            <label>
-              <input id="myCmaeraEnableCheckbox" type="checkbox"> Enable
-            </label>
-          </div>
+          <label class="radio-inline">
+            <input id="cameraDisableRadio" type="radio" name="cameraEnable" checked> Disable
+          </label>
+          <label class="radio-inline">
+            <input id="cameraEnableDefaultRadio" type="radio" name="cameraEnable"> Enable default camera
+          </label>
+          <label class="radio-inline">
+            <input id="cameraEnableRearRadio" type="radio" name="cameraEnable"> Enable rear camera
+          </label>
           <div class="form-inline">
             Transmission interval(ms)
             <select id="intervalSelect" class="form-control input-sm">
@@ -70,7 +74,9 @@
 
       const $status = $('#status').text('Idle');
 
-      const $myCmaeraEnableCheckbox = $('#myCmaeraEnableCheckbox');
+      const $cameraDisableRadio = $('#cameraDisableRadio');
+      const $cameraEnableDefaultRadio = $('#cameraEnableDefaultRadio');
+      const $cameraEnableRearRadio = $('#cameraEnableRearRadio');
       const $intervalSelect = $('#intervalSelect');
       const $quaritySelect = $('#quaritySelect');
       const $myCamera = $('#myCamera').hide();
@@ -114,26 +120,38 @@
         }
       );
 
-      $myCmaeraEnableCheckbox.on('change', () => {
-        if ($myCmaeraEnableCheckbox.prop('checked')) {
-          $myCamera.show();
+      function disableCamera() {
+        $myCamera.hide();
+        sharedCamera.disableCamera(myCamera);
+      }
 
-          sharedCamera.enableCamera(
-            myCamera,
-            {
-              interval: parseInt($intervalSelect.val()),
-              quality: parseFloat($quaritySelect.val()),
-            },
-            (error) => {
-              console.log(error);
-              alert('Could not enable camera');
-              $myCmaeraEnableCheckbox.prop('checked', false);
-              $myCamera.hide();
-            });
+      function enableCamera() {
+        $myCamera.show();
 
+        const facingMode = $cameraEnableRearRadio.prop('checked')
+            ? {exact: 'environment'}
+            : null;
+
+        sharedCamera.enableCamera(
+          myCamera,
+          facingMode,
+          {
+            interval: parseInt($intervalSelect.val()),
+            quality: parseFloat($quaritySelect.val()),
+          },
+          (error) => {
+            console.log(error);
+            alert('Could not enable camera');
+            $cameraDisableRadio.prop('checked', true);
+            disableCamera();
+          });
+      }      
+
+      $('input[name="cameraEnable"]').on('change', () => {
+        if ($cameraDisableRadio.prop('checked')) {
+          disableCamera();
         } else {
-          $myCamera.hide();
-          sharedCamera.disableCamera(myCamera);
+          enableCamera();
         }
       });
 
@@ -149,7 +167,6 @@
       $quaritySelect.on('change', changeTransferSetting);
 
       sharedCamera.connect();
-
     });
   </script>
 </body>

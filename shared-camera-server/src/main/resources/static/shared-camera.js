@@ -28,8 +28,15 @@ class SharedCamera {
     this._webSocket.close();
   }
 
-  enableCamera(video, transferSetting, failureCallback) {
-    navigator.mediaDevices.getUserMedia({audio: false, video: true})
+  enableCamera(video, facingMode, transferSetting, failureCallback) {
+    let videoParam;
+    if (facingMode) {
+      videoParam = {facingMode: facingMode};
+    } else {
+      videoParam = true;
+    }
+
+    navigator.mediaDevices.getUserMedia({audio: false, video: videoParam})
       .then((stream) => {
         video.setAttribute('playsinline', true);
         video.setAttribute('autoplay', true);
