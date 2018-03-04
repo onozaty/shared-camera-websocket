@@ -1,4 +1,4 @@
-subprojects { version = '0.0.2' }
+subprojects { version = '0.0.3' }
 
 task clean(dependsOn: [':shared-camera-server:clean', ':shared-camera-client:clean'])
 task build(dependsOn: [':shared-camera-server:build', ':shared-camera-client:build'])

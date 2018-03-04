@@ -39,12 +39,12 @@ WebSocketでサーバに送る画像は、そこからさらに`<canvas>`に書�
 
 下記のファイルをダウンロードします。
 
-* https://github.com/onozaty/shared-camera-websocket/releases/download/v0.0.2/shared-camera-server-0.0.2.jar
+* https://github.com/onozaty/shared-camera-websocket/releases/download/v0.0.3/shared-camera-server-0.0.3.jar
 
 ダウンロードしたファイルを指定して実行します。
 
 ```
-java -jar shared-camera-server-0.0.2.jar
+java -jar shared-camera-server-0.0.3.jar
 ```
 
 サーバはポート番号8080で起動します。
@@ -70,18 +70,18 @@ java -jar shared-camera-server-0.0.2.jar
 
 下記のファイルをダウンロードします。
 
-* https://github.com/onozaty/shared-camera-websocket/releases/download/v0.0.2/shared-camera-client-0.0.2.jar
+* https://github.com/onozaty/shared-camera-websocket/releases/download/v0.0.3/shared-camera-client-0.0.3.jar
 
 ダウンロードしたファイルを指定して実行します。
 
 ```
-java -jar shared-camera-client-0.0.2.jar
+java -jar shared-camera-client-0.0.3.jar
 ```
 
 デフォルトでは、localhostに対して接続しに行くため、サーバを別の環境で動作させている場合には、接続先を引数(`--websocket.uri=ws://{サーバアドレス}:8080/endpoint`)として指定する必要があります。たとえばサーバを192.168.1.100で起動していた場合、下記のような指定になります。
 
 ```
-java -jar shared-camera-client-0.0.2.jar --websocket.uri=ws://192.168.1.100:8080/endpoint
+java -jar shared-camera-client-0.0.3.jar --websocket.uri=ws://192.168.1.100:8080/endpoint
 ```
 
 他にも、下記のような引数が指定可能です。
@@ -95,5 +95,5 @@ java -jar shared-camera-client-0.0.2.jar --websocket.uri=ws://192.168.1.100:8080
 サーバの接続先が192.168.1.100で、画像の転送間隔が1秒、ドライバとしてv4l4jを利用する場合、下記のようなコマンドとなります。
 
 ```
-java -jar shared-camera-client-0.0.2.jar --websocket.uri=ws://192.168.1.100:8080/endpoint --camera.interval-millis=1000 --camera.use-v4l4j=true
+java -jar shared-camera-client-0.0.3.jar --websocket.uri=ws://192.168.1.100:8080/endpoint --camera.interval-millis=1000 --camera.use-v4l4j=true
 ```
